@@ -1,16 +1,15 @@
 pipeline {
     agent any
         triggers {
-            PollSCM "* * * * *"
+            PollSCM * * * * *"
         }
 
     stages {
         stage('Build') {
             steps {
                 echo 'Building..'
-               sh "npm install
-                    npm run build
-                    "
+               sh 'npm install'
+                sh 'npm build'
             }
 
         }
