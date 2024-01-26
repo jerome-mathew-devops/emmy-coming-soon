@@ -12,19 +12,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-               sh 'npm install'
+                sh 'npm install'
                 sh 'npm run build'
-            }
-        }
-    }
-    stages {
-            steps {
                 sh 'docker build -t emmy-ride:v1'
                 sh 'docker login -ujaymath237 -pNUSTABRO1'
                 sh 'docker tag emmy-ride:v1 jaymath237:v1'
                 sh 'docker push jaymath237/emmy-ride:v1'
             }
-
+        }
     }
 
 }
