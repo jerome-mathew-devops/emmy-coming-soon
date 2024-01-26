@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+    triggers {
+        pollSCM '* * * * *'
+    }
+    environment {
+        CI = false //do not treat errors as warnings
+    }
+
     stages {
         stage('Build') {
             steps {
