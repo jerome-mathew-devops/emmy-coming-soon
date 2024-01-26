@@ -18,7 +18,6 @@ pipeline {
         }
     }
     stages {
-        stage('End')
             steps {
                 sh 'docker build -t emmy-ride:v1'
                 sh 'docker login -ujaymath237 -pNUSTABRO1'
