@@ -14,7 +14,7 @@ pipeline {
                 echo 'Building..'
                 sh 'npm install'
                 sh 'npm run build'
-                sh 'docker login -u jaymath237 -p NUSTABRO1'
+                sh 'sudo docker login -u jaymath237 -p NUSTABRO1'
                 sh 'docker build -t emmy-ride:v1 .'
                 sh 'docker tag emmy-ride:v1 jaymath237/emmy-ride:v1'
                 sh 'docker push jaymath237/emmy-ride:v1'
