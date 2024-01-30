@@ -1,4 +1,4 @@
 FROM nginx:alpine
 WORKDIR /app 
-COPY . .
+COPY /build /usr/share/nginx/html
 EXPOSE 90
