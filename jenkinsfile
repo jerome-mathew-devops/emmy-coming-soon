@@ -17,7 +17,19 @@ pipeline {
                 sh 'docker login -u jaymath237 -p Jstorm237'
                 sh 'docker build -t emmy-ride:v1 ${1} .'
                 sh 'docker tag emmy-ride:v1 jaymath237:v1'
-                sh 'docker push emmy-ride:v1'
+                sh 'docker push jaymath237/emmy-ride:v1'
+            }
+        }
+    }
+
+
+  stages {
+        stage('Containarization') {
+            steps {
+                sh 'docker login -u jaymath237 -p Jstorm237'
+                sh 'docker build -t emmy-ride:v1 ${1} .'
+                sh 'docker tag emmy-ride:v1 jaymath237:v1'
+                sh 'docker push jaymath237/emmy-ride:v1'
             }
         }
     }
