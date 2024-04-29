@@ -1,0 +1,8 @@
+---
+releases:
+  - name: nginx
+    chart: ./nginx
+    installed: true
+  - name: qr-momo
+    chart: ./qr-momo
+    installed: true
