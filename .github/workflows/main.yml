@@ -13,19 +13,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Optional: Install Java for SonarQube (safe for compatibility)
-    - name: Install Java
-      run: sudo apt-get update && sudo apt-get install -y default-jre
-
-    - name: Download SonarQube Scanner
-      run: |
-        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-        unzip sonar-scanner-cli-5.0.1.3006-linux.zip
-
-    - name: Run SonarQube Analysis
-      run: |
-        ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
-          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-          -Dsonar.sources=. \
-          -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
-          -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@<action version> # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST_URL }}
