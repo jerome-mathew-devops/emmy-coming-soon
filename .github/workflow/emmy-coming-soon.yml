@@ -1,0 +1,42 @@
+name: Code Analysis, Build and Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Java
+      run: sudo apt-get update && sudo apt-get install -y default-jre
+
+    - name: Download SonarQube Scanner
+      run: |
+        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+        unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+
+    - name: Run SonarQube Analysis
+      run: |
+        ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
+          -Dsonar.projectKey=${{ secrets.SONARQUBE_PROJECT_KEY }} \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
+          -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker Image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp:latest .
+
+    - name: Push Docker Image
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
